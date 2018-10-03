@@ -5,5 +5,6 @@ node_js:
 install:
   - npm install
 script:
+  - commitlint-travis
   - npm run test
 
