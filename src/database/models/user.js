@@ -10,7 +10,7 @@ class User extends Model {
   }
 
   // for input validation
-  static get jsonSchema () {
+  static get jsonSchema() {
     return {
       type: 'object',
       required: ['firstName', 'lastName', 'email'],
@@ -27,7 +27,7 @@ class User extends Model {
   get(id) {
     return this.query()
       .select()
-      .where('id', id)
+      .where('id', id);
   }
 }
 
