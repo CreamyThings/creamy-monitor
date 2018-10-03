@@ -8,8 +8,13 @@
   },
   "author": "CreamyThings <cream@albinodrought.com>",
   "license": "AGPL-3.0",
-  "dependencies": {},
+  "dependencies": {
+    "request": "^2.88.0"
+  },
   "devDependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
     "jest": "^23.6.0"
   }
 }
