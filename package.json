@@ -5,6 +5,7 @@
   "description": "creamy-monitor simplifies monitoring of network-connected services.",
   "scripts": {
     "lint": "eslint src test",
+    "knex": "knex --knexfile=src/database/knexfile.js",
     "test": "jest"
   },
   "author": "CreamyThings <cream@albinodrought.com>",
