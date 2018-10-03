@@ -5,6 +5,8 @@
   "description": "creamy-monitor simplifies monitoring of network-connected services.",
   "scripts": {
     "lint": "eslint src test",
+    "start": "node server/server.js",
+    "cover": "nyc --reporter=lcov --reporter=text-summary npm test",
     "knex": "knex --knexfile=src/database/knexfile.js",
     "test": "jest"
   },
