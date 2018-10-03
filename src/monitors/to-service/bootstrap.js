@@ -1,4 +1,5 @@
 const checker = require('./checker');
+const determineHealth = require('./determineHealth');
 
 const intervals = {};
 
@@ -7,6 +8,7 @@ const checkMonitor = (monitor) => {
     console.log('checking to-service', monitor.id);
     checker(monitor.request).then((data) => {
       console.log('checked to-service', monitor.id, data);
+      determineHealth(monitor, data);
     });
   };
 };
