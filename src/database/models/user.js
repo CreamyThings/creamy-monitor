@@ -1,12 +1,34 @@
-const db = require('../bootstrap');
+const { Model } = require('objection');
+const knex = require('../bootstrap');
 
-const tableName = 'users';
+// Give the knex object to objection.
+Model.knex(knex);
 
-const user = {
-  getById: id => db
-    .select()
-    .from('users')
-    .where('id', id),
-};
+class User extends Model {
+  static get tableName() {
+    return 'users';
+  }
 
-module.exports = user;
+  // for input validation
+  static get jsonSchema () {
+    return {
+      type: 'object',
+      required: ['firstName', 'lastName', 'email'],
+
+      properties: {
+        id: { type: 'integer' },
+        firstName: { type: 'string', minLength: 1, maxLength: 255 },
+        lastName: { type: 'string', minLength: 1, maxLength: 255 },
+        email: { type: 'string', minLength: 1, maxLength: 255 },
+      },
+    };
+  }
+
+  get(id) {
+    return this.query()
+      .select()
+      .where('id', id)
+  }
+}
+
+module.exports = User;
