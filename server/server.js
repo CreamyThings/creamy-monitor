@@ -11,7 +11,14 @@ const jwtStrategy = require('./passport/jwt');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+<<<<<<< HEAD
 const testRouter = require('./routes/routeTest');
+=======
+const { Model } = require('objection');
+const knex = require('../src/database/bootstrap');
+
+const testRouter = require('./routes/test');
+>>>>>>> feat(backend): LocalStrategy fetches with User model and username
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
@@ -66,6 +73,10 @@ app.use(function(err, req, res, next) {
 // Connect to DB and Listen for incoming connections
 if (require.main === module) {
   /* Check DB connection function */
+  // init knex and pass off to objection
+  Model.knex(
+    knex()
+  );
 
   app
     .listen(PORT, function() {
