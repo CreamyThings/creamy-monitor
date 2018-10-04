@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
-const mongoose = require('mongoose');
 
 const passport = require('passport');
 const localStrategy = require('./passport/local');
@@ -16,7 +15,7 @@ const testRouter = require('./routes/test');
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
-const { PORT, MONGODB_URI, CLIENT_ORIGIN, JWT_SECRET } = require('./config');
+const { PORT, CLIENT_ORIGIN } = require('./config');
 
 // Log all requests. Skip logging during
 app.use(
