@@ -1,8 +1,5 @@
+const bcrypt = require('bcryptjs');
 const { Model } = require('objection');
-const knex = require('../bootstrap');
-
-// Give the knex object to objection.
-Model.knex(knex);
 
 class User extends Model {
   static get tableName() {
@@ -13,7 +10,7 @@ class User extends Model {
   static get jsonSchema () {
     return {
       type: 'object',
-      required: ['firstName', 'lastName', 'email'],
+      required: ['firstName', 'lastName', 'email', 'password'],
 
       properties: {
         id: { type: 'integer' },
@@ -24,10 +21,20 @@ class User extends Model {
     };
   }
 
-  get(id) {
+  static getById(id) {
     return this.query()
       .select()
       .where('id', id)
+  }
+
+  static getByUsername(username) {
+    return this.query()
+      .select()
+      .where('username', username)
+  }
+
+  validate(password) {
+    return bcrypt.compareSync(password, this.password);
   }
 }
 
