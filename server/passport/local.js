@@ -1,11 +1,25 @@
 'use strict';
 
 const { Strategy: LocalStrategy } = require('passport-local');
-
-// const User = require('../models/user');
+const User = require('../../src/database/models/User');
 
 const localStrategy = new LocalStrategy((username, password, done) => {
-  // let user;
+  return User.getByUsername(username)
+    .then(user => {
+      if (user) {
+        return user.validate(password)
+      }
+    })
+    .then(isValid => {
+      if (!isValid) {
+        return done(new Error('wrong password.'));
+      }
+
+      return done(null, user);
+    })
+    .catch(err => {
+      return done(err);
+    });
   // User.findOne({ username })
   //   .then(results => {
   //     user = results;
