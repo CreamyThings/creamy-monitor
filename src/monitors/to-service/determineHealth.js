@@ -5,7 +5,7 @@ const assertNoError = data => data.error === null;
 module.exports = (monitor, data) => {
   const rules = [
     assertNoError,
-    ...ruleParser(monitor.rules || []),
+    ...ruleParser.mapRules(monitor.rules || []),
   ];
 
   const healthy = rules.every(rule => rule(data));
