@@ -1,13 +1,9 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
-
 const passport = require('passport');
-const options = { session: false, failWithError: true };
-const localAuth = passport.authenticate('local', options);
-
 const jwt = require('jsonwebtoken');
+
 const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 const jwtAuth = passport.authenticate('jwt', {
   session: false,
@@ -21,13 +17,22 @@ function createAuthToken(user) {
   });
 }
 
-//Create JWT token
-router.post('/login', localAuth, (req, res) => {
-  const authToken = createAuthToken(req.user);
-  res.json({ authToken });
-});
+const router = express.Router();
 
-//Refresh JWT token
+// Github Redirect
+router.get('/github', passport.authenticate('github'));
+
+// Github Callback
+router.get('/github/callback',
+  passport.authenticate('github', { failureRedirect: '/' }),
+  (req, res) => {
+    // yay! authentication successful
+    // TODO: redirect with token?
+    const token = createAuthToken(req.user);
+    res.redirect(`/login/code?=${token}`);
+  })
+
+// Refresh JWT token
 router.post('/refresh', jwtAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
   res.json({ authToken });

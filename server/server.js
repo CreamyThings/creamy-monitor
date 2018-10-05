@@ -4,18 +4,16 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
-
+const { Model } = require('objection');
 const passport = require('passport');
 const dotenv = require('dotenv');
 
-<<<<<<< HEAD
-const testRouter = require('./routes/routeTest');
-=======
-const { Model } = require('objection');
 const knex = require('../src/database/bootstrap');
 
-const testRouter = require('./routes/test');
->>>>>>> feat(backend): LocalStrategy fetches with User model and username
+const localStrategy = require('./passport/local');
+const githubStrategy = require('./passport/github');
+
+const testRouter = require('./routes/routeTest');
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
@@ -23,6 +21,10 @@ const authRouter = require('./routes/auth');
 dotenv.config();
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
+
+// set up Passport strategies
+passport.use(githubStrategy);
+passport.use(jwtStrategy);
 
 // Log all requests. Skip logging during
 app.use(
@@ -45,7 +47,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.use('/api', testRouter);
-app.use('/api', authRouter);
+app.use('/api/auth', authRouter);
 
 // Endpoints below this require a valid JWT
 app.use(passport.authenticate('jwt', { session: false, failWithError: true }));
