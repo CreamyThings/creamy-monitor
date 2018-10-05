@@ -59,7 +59,7 @@ describe('healthcheck checker', () => {
       server[method.toLowerCase()]('/', (req, res) => {
         res.send(method);
       });
-  
+
       checker({ url: BASE, method }).then((resp) => {
         expect(resp.body).toBe(method);
         expect(resp.statusCode).toBe(200);
@@ -176,13 +176,21 @@ describe('healthcheck checker', () => {
           res.send(bodyMethod);
         });
 
-        checker({ url: BASE, method: bodyMethod, body, headers: { 'Content-Type': 'text/plain' } }).then((resp) => {
-          expect(resp.body).toBe(bodyMethod);
-          expect(resp.statusCode).toBe(200);
-          expect(resp.error).toBe(null);
-          expect(resp.responseTime).toBeDefined();
-          done();
-        });
+        checker(
+          {
+            url: BASE,
+            method: bodyMethod,
+            body,
+            headers: { 'Content-Type': 'text/plain' },
+          }
+        )
+          .then((resp) => {
+            expect(resp.body).toBe(bodyMethod);
+            expect(resp.statusCode).toBe(200);
+            expect(resp.error).toBe(null);
+            expect(resp.responseTime).toBeDefined();
+            done();
+          });
       });
     });
   });
