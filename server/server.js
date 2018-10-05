@@ -6,10 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const passport = require('passport');
-const localStrategy = require('./passport/local');
-const jwtStrategy = require('./passport/jwt');
-passport.use(localStrategy);
-passport.use(jwtStrategy);
+const dotenv = require('dotenv');
 
 <<<<<<< HEAD
 const testRouter = require('./routes/routeTest');
@@ -21,6 +18,9 @@ const testRouter = require('./routes/test');
 >>>>>>> feat(backend): LocalStrategy fetches with User model and username
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
+
+// allow dotenv to populate
+dotenv.config();
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 
