@@ -28,7 +28,7 @@ module.exports = ({
       body,
       headers,
       jar,
-      timeout: timeoutSeconds * 1000,
+      timeout,
       time: true, // benchmark the request
     }, (error, response, responseBody) => {
       resolve({
