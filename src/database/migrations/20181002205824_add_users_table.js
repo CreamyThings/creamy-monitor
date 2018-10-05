@@ -1,10 +1,10 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', (table) => {
     table.increments().primary();
-    table.string('firstName');
-    table.string('lastName');
+    table.string('username');
+    table.string('name');
     table.string('email');
-    table.string('password');
+    table.string('githubId');
     table.timestamps();
   });
 };

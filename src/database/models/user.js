@@ -10,12 +10,12 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['firstName', 'lastName', 'email', 'password'],
+      required: ['username', 'name', 'email', 'githubId'],
 
       properties: {
         id: { type: 'integer' },
-        firstName: { type: 'string', minLength: 1, maxLength: 255 },
-        lastName: { type: 'string', minLength: 1, maxLength: 255 },
+        username: { type: 'string', minLength: 1, maxLength: 255 },
+        name: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
       },
     };
@@ -27,10 +27,10 @@ class User extends Model {
       .where('id', id);
   }
 
-  static getByUsername(username) {
+  static getByGithub(github) {
     return this.query()
       .select()
-      .where('username', username)
+      .where('githubId', github)
   }
 
   validate(password) {
