@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const { Model } = require('objection');
 
 class User extends Model {
@@ -31,10 +30,6 @@ class User extends Model {
     return this.query()
       .select()
       .where('githubId', github)
-  }
-
-  validate(password) {
-    return bcrypt.compareSync(password, this.password);
   }
 }
 

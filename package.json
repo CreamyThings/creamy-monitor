@@ -25,18 +25,18 @@
     "@commitlint/travis-cli": "^7.1.2",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "express": "^4.16.3",
     "husky": "^1.1.1",
-    "jest": "^23.6.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm run lint && npm test",
-      "pre-push": "npm test"
-    }
+    "jest": "^23.6.0",
+    "jsonwebtoken": "^8.2.0",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1",
+    "passport-local": "^1.0.0"
   }
 }
