@@ -11,4 +11,6 @@ module.exports = (monitor, data) => {
   const healthy = rules.every(rule => rule(data));
 
   console.log(monitor.id, 'healthy?', healthy ? 'yes' : 'no');
+
+  return healthy;
 };
