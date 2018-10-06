@@ -1,24 +1,23 @@
 'use strict';
 
+// allow dotenv to populate
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 const { Model } = require('objection');
 const passport = require('passport');
-const dotenv = require('dotenv');
 
 const knex = require('../src/database/bootstrap');
 
-const localStrategy = require('./passport/local');
 const githubStrategy = require('./passport/github');
+const jwtStrategy = require('./passport/jwt');
 
 const testRouter = require('./routes/test');
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
-
-// allow dotenv to populate
-dotenv.config();
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 
@@ -89,4 +88,5 @@ if (require.main === module) {
     });
 }
 
-module.exports = app; //Export for testing
+// Export for testing
+module.exports = app;
