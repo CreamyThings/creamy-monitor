@@ -1,8 +1,4 @@
 const { Model } = require('objection');
-const knex = require('../bootstrap');
-
-// Give the knex object to objection.
-Model.knex(knex);
 
 class User extends Model {
   static get tableName() {
@@ -13,21 +9,27 @@ class User extends Model {
   static get jsonSchema () {
     return {
       type: 'object',
-      required: ['firstName', 'lastName', 'email'],
+      required: ['username', 'name', 'email', 'githubId'],
 
       properties: {
         id: { type: 'integer' },
-        firstName: { type: 'string', minLength: 1, maxLength: 255 },
-        lastName: { type: 'string', minLength: 1, maxLength: 255 },
+        username: { type: 'string', minLength: 1, maxLength: 255 },
+        name: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
       },
     };
   }
 
-  get(id) {
+  static getById(id) {
     return this.query()
       .select()
       .where('id', id)
+  }
+
+  static getByGithub(github) {
+    return this.query()
+      .select()
+      .where('githubId', github)
   }
 }
 
