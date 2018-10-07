@@ -6,7 +6,7 @@ module.exports = ({
   body,
   headers = {},
   cookies = {},
-  timeoutSeconds = 4
+  timeoutSeconds = 4,
 }) => {
   const jar = request.jar();
 
@@ -28,11 +28,11 @@ module.exports = ({
       body,
       headers,
       jar,
-      timeout: timeoutSeconds * 1000,
+      timeout,
       time: true, // benchmark the request
     }, (error, response, responseBody) => {
       resolve({
-        error: error,
+        error,
         statusCode: response && response.statusCode,
         responseTime: response && response.timings && response.timings.end,
         body: responseBody,
