@@ -70,31 +70,14 @@ describe('healthcheck checker', () => {
     });
   });
 
-  test('should timeout if it takes too long to receive a response', (done) => {
-    server.get('/', (req, res) => {
-      setTimeout(() => {
-        res.send('hi');
-      }, 5000);
-    });
-
-    checker({ url: BASE }).then((resp) => {
-      expect(resp.error).toBeDefined();
-      expect(resp.error.code).toBe('ESOCKETTIMEDOUT');
-      expect(resp.body).toBeUndefined();
-      expect(resp.responseTime).toBeUndefined();
-      expect(resp.statusCode).toBeUndefined();
-      done();
-    });
-  });
-
   test('should timeout if it takes longer than specified', (done) => {
     server.get('/', (req, res) => {
       setTimeout(() => {
         res.send('hi');
-      }, 1500);
+      }, 250);
     });
 
-    checker({ url: BASE, timeoutSeconds: 1 }).then((resp) => {
+    checker({ url: BASE, timeoutSeconds: 0.2 }).then((resp) => {
       expect(resp.error).toBeDefined();
       expect(resp.error.code).toBe('ESOCKETTIMEDOUT');
       expect(resp.body).toBeUndefined();
