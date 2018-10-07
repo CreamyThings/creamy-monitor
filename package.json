@@ -26,6 +26,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
+    "evil-dns": "^0.2.0",
     "express": "^4.16.3",
     "jest": "^23.6.0",
     "jsonwebtoken": "^8.2.0",

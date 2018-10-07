@@ -4,11 +4,11 @@
 require('dotenv').config();
 
 const express = require('express');
-const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 const { Model } = require('objection');
 const passport = require('passport');
+const evilDns = require('evil-dns');
 
 const knex = require('../src/database/bootstrap');
 
@@ -20,6 +20,8 @@ const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
+
+const app = express();
 
 // set up Passport strategies
 passport.use(githubStrategy);
@@ -73,11 +75,15 @@ app.use(function(err, req, res, next) {
 
 // Connect to DB and Listen for incoming connections
 if (require.main === module) {
-  /* Check DB connection function */
   // init knex and pass off to objection
   Model.knex(
     knex()
   );
+
+  if (process.env.NODE_ENV === 'development') {
+    // force back to localhost for development
+    evilDns.add('albinodrought.com', '127.0.0.1')
+  }
 
   app
     .listen(PORT, function() {
