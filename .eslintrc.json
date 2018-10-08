@@ -1,11 +1,17 @@
 {
   "parserOptions": {
       "ecmaVersion": 2018,
-      "sourceType": "script"
+      "sourceType": "script",
+      "ecmaFeatures": {
+          "modules": false
+      }
   },
   "env": {
       "node": true,
       "jest": true
   },
-  "extends": ["airbnb"]
+  "extends": ["airbnb-base"],
+  "rules": {
+    "strict": ["error", "never"]
+  }
 }
