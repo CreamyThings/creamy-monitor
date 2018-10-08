@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "creamy-monitor simplifies monitoring of network-connected services.",
   "scripts": {
+    "lint": "eslint src test",
     "test": "jest"
   },
   "author": "CreamyThings <cream@albinodrought.com>",
