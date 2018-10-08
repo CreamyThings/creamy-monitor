@@ -26,10 +26,11 @@ class User extends Model {
       .where('id', id)
   }
 
-  static getByGithub(github) {
+  static getByGithub(githubId) {
     return this.query()
-      .select()
-      .where('githubId', github)
+      .findOne({
+        githubId,
+      })
   }
 }
 
