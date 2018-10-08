@@ -9,7 +9,7 @@ module.exports = new Strategy({
   // explicitly pass blank callbackURL to let Github choose
   callbackURL: '',
 }, (accessToken, refreshToken, profile, cb) => {
-  return User.findByGithub(profile.id)
+  return User.getByGithub(profile.id)
     .then(user => {
       if (!user) {
         return User
