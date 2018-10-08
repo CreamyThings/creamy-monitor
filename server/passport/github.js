@@ -6,9 +6,8 @@ const User = require('../../src/database/models/user');
 module.exports = new Strategy({
   clientID: client,
   clientSecret: secret,
-  // TODO: use your own github app credentials
-  // Github ignores this explicitly for whatever reason
-  callbackURL: `${API_ORIGIN}/api/auth/github/callback`,
+  // explicitly pass blank callbackURL to let Github choose
+  callbackURL: '',
 }, (accessToken, refreshToken, profile, cb) => {
   return User.findByGithub(profile.id)
     .then(user => {
