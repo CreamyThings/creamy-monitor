@@ -5,7 +5,7 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const { JWT_SECRET } = require('../config');
 
 const options = {
-  secretOrKey: 'Pancake',
+  secretOrKey: JWT_SECRET,
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   algorithms: ['HS256']
 };
