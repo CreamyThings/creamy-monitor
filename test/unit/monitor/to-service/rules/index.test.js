@@ -31,7 +31,7 @@ describe('to-service ruleparser', () => {
         type,
         operator,
         value,
-      })(sampleObject)).toBe(true);
+      }).test(sampleObject)).toBe(true);
     });
   });
 
@@ -41,7 +41,7 @@ describe('to-service ruleparser', () => {
         type,
         operator,
         value,
-      })(sampleObject)).toBe(false);
+      }).test(sampleObject)).toBe(false);
     });
   });
 
@@ -53,7 +53,7 @@ describe('to-service ruleparser', () => {
     }));
 
     const mappedRules = ruleParser.mapRules(rules);
-    expect(mappedRules.every(tf => tf(sampleObject))).toBe(true);
+    expect(mappedRules.every(tf => tf.test(sampleObject))).toBe(true);
   });
 
   test('failing rules mapped through `mapRules` should fail', () => {
@@ -64,6 +64,36 @@ describe('to-service ruleparser', () => {
     }));
 
     const mappedRules = ruleParser.mapRules(rules);
-    expect(mappedRules.every(tf => !tf(sampleObject))).toBe(true);
+    expect(mappedRules.every(tf => !tf.test(sampleObject))).toBe(true);
+  });
+
+
+  const ruleText = [
+    {
+      rule: ['responseTime', 'lt', 1],
+      text: 'responseTime of 0.315 is less than 1',
+    },
+    {
+      rule: ['responseBody', 'contains', 'i dont promise'],
+      text: 'responseBody of everything will be ok i promise does not contain i dont promise',
+    },
+    {
+      rule: ['responseCode', 'eq', 204],
+      text: 'responseCode of 200 is not equal to 204',
+    },
+  ];
+
+  ruleText.forEach((rule, i) => {
+    test(`expected ruleText ${i}`, () => {
+      const [type, operator, value] = rule.rule;
+
+      const parsedRule = ruleParser.mapRule({
+        type,
+        operator,
+        value,
+      });
+
+      expect(parsedRule.text(sampleObject)).toBe(rule.text);
+    });
   });
 });
