@@ -13,5 +13,5 @@ repository.upsertGraph({
   request: {
     url: 'http://albinodrought.com',
     method: 'get',
-  };
+  },
 });

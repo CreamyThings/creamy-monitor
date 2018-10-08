@@ -5,7 +5,7 @@ describe('to-service rules', () => {
     error: null,
     statusCode: 200,
     responseTime: 315,
-    body: 'ok'
+    body: 'ok',
   };
 
   test('responseCode', () => {

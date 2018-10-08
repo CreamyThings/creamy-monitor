@@ -31,7 +31,7 @@ describe('to-service rule operators', () => {
   thingsThatAreTrue.forEach(([a, op, b]) => {
     test(`${a} should ${op} ${b}`, () => {
       expect(
-        operators[op](a, b)
+        operators[op](a, b),
       ).toBe(true);
     });
   });
@@ -39,7 +39,7 @@ describe('to-service rule operators', () => {
   thingsThatAreNotTrue.forEach(([a, op, b]) => {
     test(`${a} should not ${op} ${b}`, () => {
       expect(
-        operators[op](a, b)
+        operators[op](a, b),
       ).toBe(false);
     });
   });

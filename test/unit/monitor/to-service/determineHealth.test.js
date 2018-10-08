@@ -58,7 +58,7 @@ describe('to-service determineHealth', () => {
             type: 'responseCode',
             operator: 'eq',
             value: 200,
-          }
+          },
         ],
       },
       data: {
