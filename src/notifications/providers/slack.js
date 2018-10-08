@@ -1,4 +1,4 @@
-const request = require('request');
+const checker = require('./../../monitors/to-service/checker');
 
 module.exports = url => (type, { monitor, event }) => {
   const title = `${monitor.name} is ${type}!`;
@@ -9,17 +9,15 @@ module.exports = url => (type, { monitor, event }) => {
     text: action.text,
   }));
 
-  return new Promise((resolve) => {
-    request({
-      method: 'POST',
-      url,
-      body: JSON.stringify({
-        text: title,
-        attachments,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }, resolve);
+  return checker({
+    url,
+    method: 'POST',
+    body: JSON.stringify({
+      text: title,
+      attachments,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 };

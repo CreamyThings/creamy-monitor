@@ -1,16 +1,16 @@
-const request = require('request');
+const checker = require('./../../monitors/to-service/checker');
 
-const sendWebhook = (url, data) => new Promise((resolve) => {
+const sendWebhook = (url, data) => {
   console.log('notifying', url);
-  request({
+  return checker({
     method: 'POST',
     url,
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
     },
-  }, resolve);
-});
+  });
+};
 
 module.exports = url => (type, data) => sendWebhook(
   url,
