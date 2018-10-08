@@ -3,14 +3,12 @@ const determineHealth = require('./determineHealth');
 
 const intervals = {};
 
-const checkMonitor = (monitor) => {
-  return () => {
-    console.log('checking to-service', monitor.id);
-    checker(monitor.request).then((data) => {
-      console.log('checked to-service', monitor.id, data);
+const checkMonitor = monitor => () => {
+  console.log('checking to-service', monitor.id);
+  checker(monitor.request).then((data) => {
+    console.log('checked to-service', monitor.id, data);
       determineHealth(monitor, data);
-    });
-  };
+  });
 };
 
 const stopProcessing = (monitor) => {
@@ -24,7 +22,7 @@ const startProcessing = (monitor) => {
     checkMonitor(monitor),
     (monitor.interval || 30) * 1000, // ms to s
   );
-}
+};
 
 module.exports = (emitter) => {
   emitter.on('create', (monitor) => {

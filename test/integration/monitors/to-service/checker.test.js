@@ -59,7 +59,7 @@ describe('healthcheck checker', () => {
       server[method.toLowerCase()]('/', (req, res) => {
         res.send(method);
       });
-  
+
       checker({ url: BASE, method }).then((resp) => {
         expect(resp.body).toBe(method);
         expect(resp.statusCode).toBe(200);
@@ -70,31 +70,14 @@ describe('healthcheck checker', () => {
     });
   });
 
-  test('should timeout if it takes too long to receive a response', (done) => {
-    server.get('/', (req, res) => {
-      setTimeout(() => {
-        res.send('hi');
-      }, 5000);
-    });
-
-    checker({ url: BASE }).then((resp) => {
-      expect(resp.error).toBeDefined();
-      expect(resp.error.code).toBe('ESOCKETTIMEDOUT');
-      expect(resp.body).toBeUndefined();
-      expect(resp.responseTime).toBeUndefined();
-      expect(resp.statusCode).toBeUndefined();
-      done();
-    });
-  });
-
   test('should timeout if it takes longer than specified', (done) => {
     server.get('/', (req, res) => {
       setTimeout(() => {
         res.send('hi');
-      }, 1500);
+      }, 250);
     });
 
-    checker({ url: BASE, timeoutSeconds: 1 }).then((resp) => {
+    checker({ url: BASE, timeoutSeconds: 0.2 }).then((resp) => {
       expect(resp.error).toBeDefined();
       expect(resp.error.code).toBe('ESOCKETTIMEDOUT');
       expect(resp.body).toBeUndefined();
@@ -176,13 +159,21 @@ describe('healthcheck checker', () => {
           res.send(bodyMethod);
         });
 
-        checker({ url: BASE, method: bodyMethod, body, headers: { 'Content-Type': 'text/plain' } }).then((resp) => {
-          expect(resp.body).toBe(bodyMethod);
-          expect(resp.statusCode).toBe(200);
-          expect(resp.error).toBe(null);
-          expect(resp.responseTime).toBeDefined();
-          done();
-        });
+        checker(
+          {
+            url: BASE,
+            method: bodyMethod,
+            body,
+            headers: { 'Content-Type': 'text/plain' },
+          }
+        )
+          .then((resp) => {
+            expect(resp.body).toBe(bodyMethod);
+            expect(resp.statusCode).toBe(200);
+            expect(resp.error).toBe(null);
+            expect(resp.responseTime).toBeDefined();
+            done();
+          });
       });
     });
   });

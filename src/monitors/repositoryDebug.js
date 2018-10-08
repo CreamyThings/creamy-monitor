@@ -5,7 +5,7 @@ module.exports = (emitter) => {
 
   emitter.on('update', (monitor) => {
     console.log('updated', monitor);
-  })
+  });
 
   emitter.on('delete', (monitor) => {
     console.log('deleted', monitor);
