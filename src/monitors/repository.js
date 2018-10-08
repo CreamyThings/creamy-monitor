@@ -23,16 +23,15 @@ module.exports = {
       monitors[exists] = updatedThing;
       emitter.emit('update', updatedThing);
       return updatedThing;
-    } else {
-      // create
-      const createdThing = {
-        ...thing,
-        id: currentId++,
-      };
-      monitors.push(createdThing);
-      emitter.emit('create', createdThing);
-      return createdThing;
     }
+    // create
+    const createdThing = {
+      ...thing,
+      id: currentId += 1,
+    };
+    monitors.push(createdThing);
+    emitter.emit('create', createdThing);
+    return createdThing;
   },
   delete: (thingId) => {
     const exists = findIndex(thingId);
