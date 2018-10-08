@@ -24,7 +24,7 @@ router.get('/github', passport.authenticate('github'));
 
 // Github Callback
 router.get('/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', { session: false }),
   (req, res) => {
     // yay! authentication successful
     // TODO: redirect with token?
