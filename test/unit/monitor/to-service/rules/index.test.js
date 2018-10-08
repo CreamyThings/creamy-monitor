@@ -62,7 +62,7 @@ describe('to-service ruleparser', () => {
       operator,
       value,
     }));
-  
+
     const mappedRules = ruleParser.mapRules(rules);
     expect(mappedRules.every(tf => !tf(sampleObject))).toBe(true);
   });

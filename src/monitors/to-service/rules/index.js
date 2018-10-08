@@ -7,11 +7,9 @@ module.exports.mapRule = ({ type, operator, value }) => {
 
   return data => ruleOperator(
     rule(data),
-    value
+    value,
   );
 };
 
 // deserialize monitor rules into truth functions
-module.exports.mapRules = (monitorRules) => {
-  return monitorRules.map(module.exports.mapRule);
-};
+module.exports.mapRules = monitorRules => monitorRules.map(module.exports.mapRule);

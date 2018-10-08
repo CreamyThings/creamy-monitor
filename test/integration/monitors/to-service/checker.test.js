@@ -106,8 +106,8 @@ describe('healthcheck checker', () => {
   test('should use passed cookies', (done) => {
     server.use(cookieParser());
     server.get('/', (req, res) => {
-      expect(req.cookies['foo']).toBe('bar');
-      expect(req.cookies['bar']).toBe('foo');
+      expect(req.cookies.foo).toBe('bar');
+      expect(req.cookies.bar).toBe('foo');
       res.send('hi');
     });
 
@@ -123,8 +123,8 @@ describe('healthcheck checker', () => {
   test('should use passed cookies _and_ headers', (done) => {
     server.use(cookieParser());
     server.get('/', (req, res) => {
-      expect(req.cookies['foo']).toBe('bar');
-      expect(req.cookies['bar']).toBe('foo');
+      expect(req.cookies.foo).toBe('bar');
+      expect(req.cookies.bar).toBe('foo');
       expect(req.headers['x-foo']).toBe('bar');
       expect(req.headers['user-agent']).toBe('Undercover');
       res.send('hi');
@@ -165,7 +165,7 @@ describe('healthcheck checker', () => {
             method: bodyMethod,
             body,
             headers: { 'Content-Type': 'text/plain' },
-          }
+          },
         )
           .then((resp) => {
             expect(resp.body).toBe(bodyMethod);

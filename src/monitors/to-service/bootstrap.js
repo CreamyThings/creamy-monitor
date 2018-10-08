@@ -7,7 +7,7 @@ const checkMonitor = monitor => () => {
   console.log('checking to-service', monitor.id);
   checker(monitor.request).then((data) => {
     console.log('checked to-service', monitor.id, data);
-      determineHealth(monitor, data);
+    determineHealth(monitor, data);
   });
 };
 
