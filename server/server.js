@@ -47,6 +47,9 @@ app.use(express.static('public'));
 // Parse request body
 app.use(express.json());
 
+// required for passport to work
+app.use(passport.initialize());
+
 app.use('/api', testRouter);
 app.use('/api/auth', authRouter);
 
