@@ -1,5 +1,6 @@
 const checker = require('./checker');
 const determineHealth = require('./determineHealth');
+const notifications = require('./../../notifications');
 
 const intervals = {};
 
@@ -7,7 +8,8 @@ const checkMonitor = monitor => () => {
   console.log('checking to-service', monitor.id);
   checker(monitor.request).then((data) => {
     console.log('checked to-service', monitor.id, data);
-    determineHealth(monitor, data);
+    const event = determineHealth(monitor, data);
+    notifications.log(monitor, event);
   });
 };
 
