@@ -6,7 +6,7 @@ class User extends Model {
   }
 
   // for input validation
-  static get jsonSchema () {
+  static get jsonSchema() {
     return {
       type: 'object',
       required: ['username', 'name', 'email', 'githubId'],
@@ -23,14 +23,14 @@ class User extends Model {
   static getById(id) {
     return this.query()
       .select()
-      .where('id', id)
+      .where('id', id);
   }
 
   static getByGithub(githubId) {
     return this.query()
       .findOne({
         githubId,
-      })
+      });
   }
 }
 
