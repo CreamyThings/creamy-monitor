@@ -30,7 +30,7 @@ class User extends Model {
     return this.query()
       .findOne({
         githubId,
-      })
+      });
   }
 }
 
