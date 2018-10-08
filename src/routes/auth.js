@@ -1,19 +1,18 @@
-'use strict';
-
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET, JWT_EXPIRY } = require('../config');
+const { JWT_SECRET, JWT_EXPIRY } = require('../config/server');
+
 const jwtAuth = passport.authenticate('jwt', {
   session: false,
-  failWithError: true
+  failWithError: true,
 });
 
 function createAuthToken(user) {
   return jwt.sign({ user }, JWT_SECRET, {
     subject: user.username,
-    expiresIn: JWT_EXPIRY
+    expiresIn: JWT_EXPIRY,
   });
 }
 
@@ -30,7 +29,7 @@ router.get('/github/callback',
     // TODO: redirect with token?
     const token = createAuthToken(req.user);
     res.redirect(`/login/code?=${token}`);
-  })
+  });
 
 // Refresh JWT token
 router.post('/refresh', jwtAuth, (req, res) => {
