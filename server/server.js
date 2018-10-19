@@ -11,7 +11,7 @@ const jwtStrategy = require('./passport/jwt');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-const testRouter = require('./routes/test');
+const testRouter = require('./routes/routeTest');
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
