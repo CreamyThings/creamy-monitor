@@ -73,7 +73,7 @@ describe('to-service determineHealth', () => {
 
   checks.forEach(({ monitor, data, pass }, i) => {
     test(`check #${i} should ${pass ? 'pass' : 'fail'}`, () => {
-      expect(determineHealth(monitor, data)).toBe(pass);
+      expect(determineHealth(monitor, data).healthy).toBe(pass);
     });
   });
 });
