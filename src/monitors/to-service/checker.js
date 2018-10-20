@@ -1,5 +1,3 @@
-'use strict';
-
 const request = require('request');
 
 module.exports = ({
@@ -12,7 +10,7 @@ module.exports = ({
 }) => {
   const jar = request.jar();
 
-  Object.entries(cookies).forEach(pair => {
+  Object.entries(cookies).forEach((pair) => {
     jar.setCookie(pair.join('='), url);
   });
 
@@ -21,21 +19,24 @@ module.exports = ({
   const timeout = timeoutSeconds * 1000;
 
   return new Promise((resolve) => {
-    request({
-      method,
-      url,
-      body,
-      headers,
-      jar,
-      timeout,
-      time: true, // benchmark the request
-    }, (error, response, responseBody) => {
-      resolve({
-        error,
-        statusCode: response && response.statusCode,
-        responseTime: response && response.timings && response.timings.end,
-        body: responseBody,
-      });
-    });
+    request(
+      {
+        method,
+        url,
+        body,
+        headers,
+        jar,
+        timeout,
+        time: true, // benchmark the request
+      },
+      (error, response, responseBody) => {
+        resolve({
+          error,
+          statusCode: response && response.statusCode,
+          responseTime: response && response.timings && response.timings.end,
+          body: responseBody,
+        });
+      },
+    );
   });
 };
