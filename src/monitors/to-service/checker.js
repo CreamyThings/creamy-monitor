@@ -8,7 +8,7 @@ module.exports = ({
   body,
   headers = {},
   cookies = {},
-  timeoutSeconds = 4
+  timeoutSeconds = 4,
 }) => {
   const jar = request.jar();
 
@@ -20,25 +20,22 @@ module.exports = ({
   // so convert our s timeout to ms
   const timeout = timeoutSeconds * 1000;
 
-  return new Promise(resolve => {
-    request(
-      {
-        method,
-        url,
-        body,
-        headers,
-        jar,
-        timeout: timeoutSeconds * 1000,
-        time: true // benchmark the request
-      },
-      (error, response, responseBody) => {
-        resolve({
-          error: error,
-          statusCode: response && response.statusCode,
-          responseTime: response && response.timings && response.timings.end,
-          body: responseBody
-        });
-      }
-    );
+  return new Promise((resolve) => {
+    request({
+      method,
+      url,
+      body,
+      headers,
+      jar,
+      timeout,
+      time: true, // benchmark the request
+    }, (error, response, responseBody) => {
+      resolve({
+        error,
+        statusCode: response && response.statusCode,
+        responseTime: response && response.timings && response.timings.end,
+        body: responseBody,
+      });
+    });
   });
 };
