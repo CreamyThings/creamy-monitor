@@ -12,10 +12,6 @@ const knex = require('../src/database/bootstrap');
 const githubStrategy = require('./passport/github');
 const jwtStrategy = require('./passport/jwt');
 
-<<<<<<< HEAD:server/server.js
-const testRouter = require('./routes/routeTest');
-=======
->>>>>>> refactor(backend): migrate server changes:src/server.js
 const authTestRouter = require('./routes/authTest');
 const authRouter = require('./routes/auth');
 
