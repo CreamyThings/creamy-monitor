@@ -21,6 +21,7 @@ class Check extends Model {
         initialized: { type: 'boolean' },
         healthy: { type: 'boolean' },
         request: { type: 'object' },
+        notifications: { type: 'object' },
       },
     };
   }
