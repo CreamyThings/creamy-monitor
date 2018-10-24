@@ -1,47 +1,31 @@
 const EventEmitter = require('events');
+const Check = require('./../database/models/check');
 
-let currentId = 1; // flawless
 const emitter = new EventEmitter();
-
-const monitors = [];
-
-const findIndex = id => monitors.findIndex(m => m.id === id);
 
 module.exports = {
   emitter,
-  all: () => monitors.slice(),
-  upsertGraph: (thing) => { // maybe ghetto clone of http://vincit.github.io/objection.js/#graph-upserts
-    const exists = findIndex(thing.id);
+  all: async () => Check.query(),
+  upsertGraph: async (check) => {
+    const existed = !!check.id;
+    const fetched = await Check.query().upsertGraphAndFetch(check);
 
-    if (exists > -1) {
-      // exists
-      const existingThing = monitors[exists];
-      const updatedThing = {
-        ...existingThing,
-        ...thing,
-      };
-      monitors[exists] = updatedThing;
-      emitter.emit('update', updatedThing);
-      return updatedThing;
+    if (existed) {
+      emitter.emit('update', fetched);
+    } else {
+      emitter.emit('create', fetched);
     }
-    // create
-    const createdThing = {
-      ...thing,
-      id: currentId += 1,
-    };
-    monitors.push(createdThing);
-    emitter.emit('create', createdThing);
-    return createdThing;
+
+    return fetched;
   },
-  delete: (thingId) => {
-    const exists = findIndex(thingId);
+  delete: async (thingId) => {
+    const thing = await Check.query().where('id', thingId);
 
-    if (exists > -1) {
-      emitter.emit('delete', monitors[exists]);
-      monitors.splice(exists, 1); // remove
-      return true;
+    if (!thing) {
+      return false;
     }
 
-    return false;
+    emitter.emit('delete', thing);
+    return Check.query().delete().where('id', thingId);
   },
 };
