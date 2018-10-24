@@ -17,6 +17,8 @@ const authRouter = require('./routes/auth');
 
 const { PORT, CLIENT_ORIGIN } = require('./config/server');
 
+const runner = require('./runner');
+
 const app = express();
 
 // set up Passport strategies
@@ -81,6 +83,8 @@ if (require.main === module) {
   app
     .listen(PORT, function () {
       console.info(`Server listening on ${this.address().port}`);
+      // hack to bootstrap local queue worker
+      runner();
     })
     .on('error', (err) => {
       console.error(err);
