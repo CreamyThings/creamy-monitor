@@ -19,4 +19,8 @@ npm run knex migrate:latest
 
 # start local server
 npm run start
+
+# start local client
+npm run serve
+
 ```
