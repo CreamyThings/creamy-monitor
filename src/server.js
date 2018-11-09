@@ -13,6 +13,7 @@ const githubStrategy = require('./passport/github');
 const jwtStrategy = require('./passport/jwt');
 
 const authTestRouter = require('./routes/authTest');
+const checkRouter = require('./routes/checks');
 const authRouter = require('./routes/auth');
 
 const { PORT, CLIENT_ORIGIN } = require('./config/server');
@@ -54,6 +55,7 @@ app.use('/api/auth', authRouter);
 app.use(passport.authenticate('jwt', { session: false, failWithError: true }));
 
 app.use('/api', authTestRouter);
+app.use('/api', checkRouter);
 
 // Catch-all 404
 app.use((req, res, next) => {
