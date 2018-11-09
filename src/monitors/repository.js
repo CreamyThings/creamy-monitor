@@ -6,6 +6,12 @@ const emitter = new EventEmitter();
 module.exports = {
   emitter,
   all: async () => Check.query(),
+  byUser: async user => Check.query().where('user_id', user.id),
+  byUserAndId: async (user, id) => Check
+    .query()
+    .where('id', id)
+    .andWhere('user_id', user.id)
+    .first(),
   upsertGraph: async (check) => {
     const existed = !!check.id;
     const fetched = await Check.query().upsertGraphAndFetch(check);
