@@ -25,6 +25,19 @@ router.post('/check', async (req, res) => {
   res.json(check);
 });
 
+router.get('/check/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const check = await repository.byUserAndId(req.user, id);
+
+  if (!check) {
+    res.sendStatus(404);
+    return;
+  }
+
+  res.json(check);
+});
+
 router.post('/check/:id', async (req, res) => {
   const { id } = req.params;
 
